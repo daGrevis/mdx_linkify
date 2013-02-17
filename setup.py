@@ -9,4 +9,4 @@ setup(name="mdx_linkify",
       author_email="dagrevis@gmail.com",
       url="https://github.com/daGrevis/mdx_linkify",
       packages=["mdx_linkify"],
-      install_requires=["Markdown (>=2.2.1)", "bleach (>=1.2)"])
+      install_requires=["Markdown>=2.2.1", "bleach>=1.2"])
