@@ -3,7 +3,7 @@ from distutils.core import setup
 
 
 setup(name="mdx_linkify",
-      version="0.1",
+      version="0.2",
       description="Link recognition for Python Markdown",
       author="Raitis (daGrevis) Stengrevics",
       author_email="dagrevis@gmail.com",
