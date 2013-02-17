@@ -9,6 +9,18 @@ class LinkifyTest(unittest.TestCase):
         actual = markdown("http://example.com", extensions=["linkify"])
         self.assertEqual(expected, actual)
 
+    def test_https_link(self):
+        link = "https://example.com"
+        expected = '<p><a href="{link}">{link}</a></p>'.format(link=link)
+        actual = markdown(link, extensions=["linkify"])
+        self.assertEqual(expected, actual)
+
+    def test_complex_link(self):
+        link = "http://spam.cheese.bacon.eggs.io/?monty=Python#im_loving_it"
+        expected = '<p><a href="{link}">{link}</a></p>'.format(link=link)
+        actual = markdown(link, extensions=["linkify"])
+        self.assertEqual(expected, actual)
+
     def test_no_link(self):
         expected = '<p>example.com</p>'
         actual = markdown("example.com", extensions=["linkify"])
@@ -33,6 +45,12 @@ class LinkifyTest(unittest.TestCase):
         expected = '<p><a href="http://example.com">http://example.com</a></p>'
         actual = markdown("[http://example.com](http://example.com)",
                           extensions=["linkify"])
+        self.assertEqual(expected, actual)
+
+    def test_image_that_has_link_in_it(self):
+        link = "http://example.com/monty.jpg"
+        expected = '<p><img alt="Monty" src="{0}" /></p>'.format(link)
+        actual = markdown("![Monty]({0})".format(link), extensions=["linkify"])
         self.assertEqual(expected, actual)
 
 
