@@ -53,6 +53,11 @@ class LinkifyTest(unittest.TestCase):
         actual = markdown("![Monty]({0})".format(link), extensions=["linkify"])
         self.assertEqual(expected, actual)
 
+    def test_no_escape(self):
+        expected = '<script>alert(1)</script>'
+        actual = markdown(expected, extensions=["linkify"])
+        self.assertEqual(expected, actual)
+
 
 if __name__ == "__main__":
     unittest.main()
