@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 
 from urlparse import urlparse
@@ -35,6 +34,8 @@ class LinkifyPreprocessor(Preprocessor):
                 if not tld_extract(word).tld:
                     new_words.append(word)
                     continue
+                # Seems as a link.
+                # Lets fix it's format so that Markdown can see it later.
                 link = "[{0}]({1})".format(word, word)
                 new_words.append(link)
             new_lines.append(" ".join(new_words))
