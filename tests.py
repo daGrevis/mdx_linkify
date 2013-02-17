@@ -22,8 +22,8 @@ class LinkifyTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_no_link(self):
-        expected = '<p>example.com</p>'
-        actual = markdown("example.com", extensions=["linkify"])
+        expected = '<p>foo.bar</p>'
+        actual = markdown("foo.bar", extensions=["linkify"])
         self.assertEqual(expected, actual)
 
     def test_links(self):
@@ -49,7 +49,7 @@ class LinkifyTest(unittest.TestCase):
 
     def test_image_that_has_link_in_it(self):
         link = "http://example.com/monty.jpg"
-        expected = '<p><img alt="Monty" src="{0}" /></p>'.format(link)
+        expected = '<p><img alt="Monty" src="{0}"></p>'.format(link)
         actual = markdown("![Monty]({0})".format(link), extensions=["linkify"])
         self.assertEqual(expected, actual)
 
