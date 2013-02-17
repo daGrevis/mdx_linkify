@@ -1,3 +1,2 @@
 Markdown==2.2.1
 bleach==1.2
-html5lib==0.95
