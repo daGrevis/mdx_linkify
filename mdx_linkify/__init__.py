@@ -1,1 +1,1 @@
-from mdx_linkify import makeExtension
+from mdx_linkify.mdx_linkify import makeExtension
