@@ -1,18 +1,41 @@
 # Mdx Linkify
 
-This extension for [Python Markdown](https://github.com/waylan/Python-Markdown) will convert all links to HTML anchors using [Python Bleach](https://github.com/jsocol/bleach).
+[![Build Status](https://travis-ci.org/daGrevis/daGrevis.lv.png?branch=master)](https://travis-ci.org/daGrevis/daGrevis.lv)
 
-There's an existing solution that tries to do the same. The main difference from mine extension is that it uses regexes to do that instead of a tool that's made for the job.
+This extension for [Python Markdown](https://github.com/waylan/Python-Markdown) will convert all links to HTML anchors.
 
-## An example
+There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for parsing links. Mdx Linkify is a bit smarter and asks [Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
+
+## An Example
 
     >>> from markdown import markdown
-    >>> text = "Hello, world! Here a [Markdown link](http://example.com/), but here's a plain link -- http://example.org/."
+    >>> text = "http://example.org/"
     >>> markdown(text)
-    u'<p>Hello, world! Here a <a href="http://example.com/">Markdown link</a>, but here\'s a plain link -- http://example.org/.</p>'
+    u'<p>http://example.org/</p>'
     >>> markdown(text, extensions=["linkify"])
-    u'<p>Hello, world! Here a <a href="http://example.com/">Markdown link</a>, but here\'s a plain link -- <a href="http://example.org/">http://example.org/</a>.</p>'
+    u'<p><a href="http://example.org/">http://example.org/</a></p>'
 
 ## Installation
 
-    pip install git+https://github.com/daGrevis/mdx_linkify
+Simple installation on current environment:
+
+    pip install git+https://github.com/daGrevis/mdx_linkify@0.3
+
+You can add it to `requirements.txt` too:
+
+    echo 'git+https://github.com/daGrevis/mdx_linkify@0.3' >> requirements.txt
+
+**P.S. Pay attention to `@0.3`. It's the version number!**
+
+## Development
+
+1. Fork repo,
+2. Clone repo,
+3. Create `virtualenv`,
+4. Execute `python setup.py install`,
+5. Add some awesome feature,
+6. Check tests with `python setup.py test`,
+7. Check `pep8`,
+8. Add commit and push to forked repo,
+9. Ask for a merge request,
+10. Stay awesome! :+1:
