@@ -1,10 +1,10 @@
 # Mdx Linkify
 
-[![Build Status](https://travis-ci.org/daGrevis/daGrevis.lv.png?branch=master)](https://travis-ci.org/daGrevis/daGrevis.lv)
+[![Build Status](https://travis-ci.org/daGrevis/mdx_linkify.png?branch=master)](https://travis-ci.org/daGrevis/mdx_linkify)
 
 This extension for [Python Markdown](https://github.com/waylan/Python-Markdown) will convert all links to HTML anchors.
 
-There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for parsing links. Mdx Linkify is a bit smarter and asks [Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
+There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for parsing links with regexes. Mdx Linkify is a bit smarter and asks [Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
 
 ## An Example
 
