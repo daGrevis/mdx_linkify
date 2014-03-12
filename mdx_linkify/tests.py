@@ -1,6 +1,8 @@
 import unittest
 
-from markdown import markdown
+from markdown import markdown, Markdown
+
+from mdx_linkify.mdx_linkify import LinkifyExtension
 
 
 class LinkifyTest(unittest.TestCase):
@@ -56,6 +58,35 @@ class LinkifyTest(unittest.TestCase):
     def test_no_escape(self):
         expected = '<script>alert(1)</script>'
         actual = markdown(expected, extensions=["linkify"])
+        self.assertEqual(expected, actual)
+
+    def test_callbacks(self):
+        def dont_linkify_python(attrs, new=False):
+            if not new:  # This is an existing <a> tag, leave it be.
+                return attrs
+
+            # If the TLD is '.py', make sure it starts with http: or https:
+            text = attrs['_text']
+            if text.endswith('.py') and \
+               not text.startswith(('www.', 'http:', 'https:')):
+                # This looks like a Python file, not a URL. Don't make a link.
+                return None
+
+            # Everything checks out, keep going to the next callback.
+            return attrs
+
+        configs = {
+            'linkifycallbacks': [[dont_linkify_python], '']
+        }
+        linkify_ext = LinkifyExtension(configs=configs)
+        md = Markdown(extensions=[linkify_ext])
+
+        text = "setup.com www.setup.py http://setup.py setup.py"
+        expected = ('<p><a href="http://setup.com">setup.com</a> '
+                    '<a href="http://www.setup.py">www.setup.py</a> '
+                    '<a href="http://setup.py">http://setup.py</a> '
+                    'setup.py</p>')
+        actual = md.convert(text)
         self.assertEqual(expected, actual)
 
 
