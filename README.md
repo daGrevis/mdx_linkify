@@ -1,6 +1,7 @@
 # Mdx Linkify
 
 [![Build Status](https://travis-ci.org/daGrevis/mdx_linkify.png?branch=master)](https://travis-ci.org/daGrevis/mdx_linkify)
+[![Coverage Status](https://coveralls.io/repos/daGrevis/mdx_linkify/badge.png?branch=master)](https://coveralls.io/r/daGrevis/mdx_linkify?branch=master)
 
 This extension for [Python Markdown](https://github.com/waylan/Python-Markdown) will convert all links to HTML anchors.
 
