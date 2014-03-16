@@ -3,6 +3,7 @@
 /lib/
 /build/
 /dist/
+/share/
 *.egg-info/
 *.py[cow]
 /.coverage
