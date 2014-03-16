@@ -3,6 +3,9 @@ from setuptools import setup
 
 
 def get_readme(filename):
+    if not path.exists(filename):
+        return ""
+
     with open(path.join(path.dirname(__file__), filename)) as readme:
         content = readme.read()
     return content
