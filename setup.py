@@ -8,7 +8,7 @@ def get_readme(filename):
     return content
 
 setup(name="mdx_linkify",
-      version="0.3",
+      version="0.4",
       author="Raitis (daGrevis) Stengrevics",
       author_email="dagrevis@gmail.com",
       description="Link recognition for Python Markdown",

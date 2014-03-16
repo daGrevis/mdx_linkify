@@ -49,13 +49,11 @@ There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for pa
 
 Simple installation on current environment:
 
-    pip install git+https://github.com/daGrevis/mdx_linkify@0.3
+    pip install mdx_linkify
 
 You can add it to `requirements.txt` too:
 
-    echo 'git+https://github.com/daGrevis/mdx_linkify@0.3' >> requirements.txt
-
-**P.S. Pay attention to `@0.3`. It's the version number!**
+    echo 'mdx_linkify' >> requirements.txt
 
 ## Development
 
