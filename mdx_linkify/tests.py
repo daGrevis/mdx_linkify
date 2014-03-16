@@ -74,14 +74,14 @@ class LinkifyTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_callbacks(self):
-        def dont_linkify_python(attrs, new=False):
+        def dont_linkify_py_tld(attrs, new=False):
             if not new:  # This is an existing <a> tag, leave it be.
                 return attrs
 
             # If the TLD is '.py', make sure it starts with http: or https:
             text = attrs['_text']
-            if text.endswith('.py') and \
-               not text.startswith(('www.', 'http:', 'https:')):
+            if (text.endswith('.py') and
+                not text.startswith(('www.', 'http:', 'https:'))):
                 # This looks like a Python file, not a URL. Don't make a link.
                 return None
 
@@ -89,7 +89,7 @@ class LinkifyTest(unittest.TestCase):
             return attrs
 
         configs = {
-            'linkifycallbacks': [[dont_linkify_python], '']
+            'linkify_callbacks': [[dont_linkify_py_tld], '']
         }
         linkify_ext = LinkifyExtension(configs=configs)
         md = Markdown(extensions=[linkify_ext])
