@@ -91,8 +91,8 @@ class LinkifyTest(unittest.TestCase):
         configs = {
             'linkify_callbacks': [[dont_linkify_py_tld], '']
         }
-        linkify_ext = LinkifyExtension(configs=configs)
-        md = Markdown(extensions=[linkify_ext])
+        linkify_extension = LinkifyExtension(configs=configs)
+        md = Markdown(extensions=[linkify_extension])
 
         text = "setup.com www.setup.py http://setup.py setup.py"
         expected = ('<p><a href="http://setup.com">setup.com</a> '

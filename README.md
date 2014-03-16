@@ -9,12 +9,41 @@ There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for pa
 
 ## An Example
 
+### Basic Usage
+
     >>> from markdown import markdown
     >>> text = "http://example.org/"
     >>> markdown(text)
     u'<p>http://example.org/</p>'
     >>> markdown(text, extensions=["linkify"])
     u'<p><a href="http://example.org/">http://example.org/</a></p>'
+
+### Linkify Callbacks
+
+    >>> from markdown import Markdown
+    >>> text = "http://example.org/"
+    >>> def dont_linkify_py_tld(attrs, new=False):
+    >>>     if not new:  # This is an existing <a> tag, leave it be.
+    >>>         return attrs
+    >>>
+    >>>     # If the TLD is '.py', make sure it starts with http: or https:
+    >>>     text = attrs['_text']
+    >>>     if (text.endswith('.py') and
+    >>>         not text.startswith(('www.', 'http:', 'https:'))):
+    >>>         # This looks like a Python file, not a URL. Don't make a link.
+    >>>         return None
+    >>>
+    >>>     # Everything checks out, keep going to the next callback.
+    >>>     return attrs
+    >>> configs = {
+    >>>     'linkify_callbacks': [[dont_linkify_py_tld], '']
+    >>> }
+    >>> linkify_extension = LinkifyExtension(configs=configs)
+    >>> md = Markdown(extensions=[linkify_extension])
+    >>> md.convert("https://setup.py")
+    u'<p><a href="https://setup.py">https://setup.py</a></p>'
+    >>> md.convert("setup.py")
+    u'<p>setup.py</p>'
 
 ## Installation
 
