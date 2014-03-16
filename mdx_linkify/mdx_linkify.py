@@ -12,14 +12,25 @@ class MyTokenizer(HTMLSanitizer):
 
 
 class LinkifyPostprocessor(Postprocessor):
+    def __init__(self, md, linkifycallbacks=[]):
+        super(Postprocessor, self).__init__(md)
+        self._callbacks = linkifycallbacks
+
     def run(self, text):
-        text = bleach.linkify(text, callbacks=[], tokenizer=MyTokenizer)
+        text = bleach.linkify(text,
+                              callbacks=self._callbacks,
+                              tokenizer=MyTokenizer)
         return text
 
 
 class LinkifyExtension(Extension):
+    config = {'linkifycallbacks': [[], 'Callbacks to send to bleach.linkify']}
+
     def extendMarkdown(self, md, md_globals):
-        md.postprocessors.add("linkify", LinkifyPostprocessor(md), "_begin")
+        md.postprocessors.add(
+            "linkify",
+            LinkifyPostprocessor(md, self.getConfig('linkifycallbacks')),
+            "_begin")
 
 
 def makeExtension(configs=None):
