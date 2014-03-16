@@ -56,10 +56,17 @@ class LinkifyTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_image_that_has_link_in_it(self):
-        link = "http://example.com/monty.jpg"
-        expected = '<p><img src="{0}" alt="Monty"></p>'.format(link)
-        actual = markdown("![Monty]({0})".format(link), extensions=["linkify"])
-        self.assertEqual(expected, actual)
+        src = "http://example.com/monty.jpg"
+        alt = "Monty"
+
+        # Order is not guaranteed so we check both possibilities.
+        expected_1 = '<p><img src="{}" alt="{}"></p>'.format(src, alt)
+        expected_2 = '<p><img alt="{}" src="{}"></p>'.format(alt, src)
+        actual = markdown("![Monty]({})".format(src), extensions=["linkify"])
+        try:
+            self.assertEqual(expected_1, actual)
+        except AssertionError:
+            self.assertEqual(expected_2, actual)
 
     def test_no_escape(self):
         expected = '<script>alert(1)</script>'
