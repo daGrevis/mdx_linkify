@@ -1,8 +1,14 @@
+import sys
 import unittest
 
 from markdown import markdown, Markdown
 
-from mdx_linkify.mdx_linkify import LinkifyExtension
+is_python3 = sys.version_info >= (3, 0)
+
+if is_python3:
+    from mdx_linkify.mdx_linkify import LinkifyExtension
+else:
+    from mdx_linkify import LinkifyExtension
 
 
 class LinkifyTest(unittest.TestCase):
