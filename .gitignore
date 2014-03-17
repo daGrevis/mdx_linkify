@@ -1,10 +1,10 @@
 /bin/
+/build/
+/.coverage
+/dist/
+*.egg
+*.egg-info/
 /include/
 /lib/
-/build/
-/dist/
-/share/
-*.egg-info/
 *.py[cow]
-/.coverage
-*.egg
+/share/
