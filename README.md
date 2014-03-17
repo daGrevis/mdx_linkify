@@ -12,9 +12,9 @@ There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for
 parsing links with regexes. Mdx Linkify is a bit smarter and asks
 [Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
 
-## An Example
+## Usage
 
-### Basic Usage
+### Basic Example
 
 By default, if you add `linkify` extension to `markdown` extensions...
 
@@ -66,23 +66,19 @@ assert expected == actual
 
 ## Installation
 
-Simple installation on current environment:
+The project is [on PyPI](https://pypi.python.org/pypi/mdx_linkify)!
 
     pip install mdx_linkify
 
-You can add it to `requirements.txt` too:
-
-    echo 'mdx_linkify' >> requirements.txt
-
 ## Development
 
-0. Fork repo,
-1. Clone repo,
-2. Create `virtualenv`,
-3. Execute `python setup.py install`,
-4. Add some awesome feature or a fix,
-5. Check tests with `python setup.py test`,
-6. Check `pep8`,
-7. Add commit and push to forked repo,
-8. Ask for a merge request,
-9. Stay awesome! :+1:
+```
+git clone git@github.com:daGrevis/mdx_linkify.git
+virtualenv mdx_linkify/
+cd mdx_linkify/
+source bin/activate
+python setup.py install
+python setup.py test
+```
+
+Pull requests are much welcome! :+1:
