@@ -13,6 +13,8 @@ There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for pa
 
 ### Basic Usage
 
+By default, if you add `linkify` extension to `markdown` extensions...
+
 ```python
 from markdown import markdown
 
@@ -21,36 +23,43 @@ text = "http://example.org/"
 
 assert markdown(text) == "<p>http://example.org/</p>"
 
-assert (markdown(text, extensions=["linkify"])
-        == '<p><a href="http://example.org/">http://example.org/</a></p>')
+expected = markdown(text, extensions=["linkify"])
+actual = '<p><a href="http://example.org/">http://example.org/</a></p>'
+assert expected == actual
 ```
+
+...it will automatically convert all links to HTML anchors.
 
 ### Linkify Callbacks
 
-    >>> from markdown import Markdown
-    >>> text = "http://example.org/"
-    >>> def dont_linkify_py_tld(attrs, new=False):
-    >>>     if not new:  # This is an existing <a> tag, leave it be.
-    >>>         return attrs
-    >>>
-    >>>     # If the TLD is '.py', make sure it starts with http: or https:
-    >>>     text = attrs['_text']
-    >>>     if (text.endswith('.py') and
-    >>>         not text.startswith(('www.', 'http:', 'https:'))):
-    >>>         # This looks like a Python file, not a URL. Don't make a link.
-    >>>         return None
-    >>>
-    >>>     # Everything checks out, keep going to the next callback.
-    >>>     return attrs
-    >>> configs = {
-    >>>     'linkify_callbacks': [[dont_linkify_py_tld], '']
-    >>> }
-    >>> linkify_extension = LinkifyExtension(configs=configs)
-    >>> md = Markdown(extensions=[linkify_extension])
-    >>> md.convert("https://setup.py")
-    u'<p><a href="https://setup.py">https://setup.py</a></p>'
-    >>> md.convert("setup.py")
-    u'<p>setup.py</p>'
+If you need custom callbacks, you can specify them by passing
+`LinkifyExtension` to `Markdown`...
+
+```python
+from mdx_linkify.mdx_linkify import LinkifyExtension
+from markdown import Markdown
+
+
+def dont_linkify_txt_extension(attrs, new=False):
+    if attrs["_text"].endswith(".txt"):
+        return None
+
+    return attrs
+
+configs = {
+    "linkify_callbacks": [[dont_linkify_txt_extension], ""]
+}
+linkify_extension = LinkifyExtension(configs=configs)
+md = Markdown(extensions=[linkify_extension])
+
+assert md.convert("not_link.txt"), '<p>not_link.txt</p>'
+
+expected = md.convert("example.com")
+actual = '<p><a href="http://example.com">example.com</a></p>'
+assert expected == actual
+```
+
+...here, we only convert links that do **not** end with `.txt` extension.
 
 ## Installation
 
