@@ -55,14 +55,10 @@ class LinkifyTest(unittest.TestCase):
         src = "http://example.com/monty.jpg"
         alt = "Monty"
 
-        # Order is not guaranteed so we check both possibilities.
-        expected_1 = '<p><img src="{}" alt="{}"></p>'.format(src, alt)
-        expected_2 = '<p><img alt="{}" src="{}"></p>'.format(alt, src)
+        # Order is not guaranteed so we check for substring existence.
         actual = markdown("![Monty]({})".format(src), extensions=["linkify"])
-        try:
-            self.assertEqual(expected_1, actual)
-        except AssertionError:
-            self.assertEqual(expected_2, actual)
+        self.assertIn(src, actual)
+        self.assertIn(alt, actual)
 
     def test_no_escape(self):
         expected = '<script>alert(1)</script>'
