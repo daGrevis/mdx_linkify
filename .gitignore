@@ -7,3 +7,4 @@
 *.egg-info/
 *.py[cow]
 /.coverage
+*.egg
