@@ -5,9 +5,12 @@
 [![PyPI Downloads](https://pypip.in/d/mdx_linkify/badge.png)](https://pypi.python.org/pypi/mdx_linkify)
 [![PyPI Version](https://pypip.in/v/mdx_linkify/badge.png)](https://pypi.python.org/pypi/mdx_linkify)
 
-This extension for [Python Markdown](https://github.com/waylan/Python-Markdown) will convert all links to HTML anchors.
+This extension for [Python Markdown](https://github.com/waylan/Python-Markdown)
+will convert all links to HTML anchors.
 
-There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for parsing links with regexes. Mdx Linkify is a bit smarter and asks [Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
+There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for
+parsing links with regexes. Mdx Linkify is a bit smarter and asks
+[Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
 
 ## An Example
 
@@ -32,8 +35,8 @@ assert expected == actual
 
 ### Linkify Callbacks
 
-If you need custom callbacks, you can specify them by passing
-`LinkifyExtension` to `Markdown`...
+If you need callbacks, you can specify them by passing `LinkifyExtension` to
+`Markdown`...
 
 ```python
 from mdx_linkify.mdx_linkify import LinkifyExtension
@@ -73,13 +76,13 @@ You can add it to `requirements.txt` too:
 
 ## Development
 
-1. Fork repo,
-2. Clone repo,
-3. Create `virtualenv`,
-4. Execute `python setup.py install`,
-5. Add some awesome feature,
-6. Check tests with `python setup.py test`,
-7. Check `pep8`,
-8. Add commit and push to forked repo,
-9. Ask for a merge request,
-10. Stay awesome! :+1:
+0. Fork repo,
+1. Clone repo,
+2. Create `virtualenv`,
+3. Execute `python setup.py install`,
+4. Add some awesome feature or a fix,
+5. Check tests with `python setup.py test`,
+6. Check `pep8`,
+7. Add commit and push to forked repo,
+8. Ask for a merge request,
+9. Stay awesome! :+1:
