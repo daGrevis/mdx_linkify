@@ -70,33 +70,25 @@ class LinkifyTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_callbacks(self):
-        def dont_linkify_py_tld(attrs, new=False):
-            if not new:  # This is an existing <a> tag, leave it be.
-                return attrs
-
-            # If the TLD is '.py', make sure it starts with http: or https:
-            text = attrs['_text']
-            if (text.endswith('.py') and
-                not text.startswith(('www.', 'http:', 'https:'))):
-                # This looks like a Python file, not a URL. Don't make a link.
+        def dont_linkify_txt_extension(attrs, new=False):
+            if attrs["_text"].endswith(".txt"):
                 return None
 
-            # Everything checks out, keep going to the next callback.
             return attrs
 
         configs = {
-            'linkify_callbacks': [[dont_linkify_py_tld], '']
+            "linkify_callbacks": [[dont_linkify_txt_extension], ""]
         }
         linkify_extension = LinkifyExtension(configs=configs)
         md = Markdown(extensions=[linkify_extension])
 
-        text = "setup.com www.setup.py http://setup.py setup.py"
-        expected = ('<p><a href="http://setup.com">setup.com</a> '
-                    '<a href="http://www.setup.py">www.setup.py</a> '
-                    '<a href="http://setup.py">http://setup.py</a> '
-                    'setup.py</p>')
-        actual = md.convert(text)
-        self.assertEqual(expected, actual)
+        actual = md.convert("not_link.txt")
+        expected = '<p>not_link.txt</p>'
+        self.assertEqual(actual, expected)
+
+        actual = md.convert("example.com")
+        expected = '<p><a href="http://example.com">example.com</a></p>'
+        self.assertEqual(actual, expected)
 
 
 if __name__ == "__main__":
