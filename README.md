@@ -13,12 +13,17 @@ There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for pa
 
 ### Basic Usage
 
-    >>> from markdown import markdown
-    >>> text = "http://example.org/"
-    >>> markdown(text)
-    u'<p>http://example.org/</p>'
-    >>> markdown(text, extensions=["linkify"])
-    u'<p><a href="http://example.org/">http://example.org/</a></p>'
+```python
+from markdown import markdown
+
+
+text = "http://example.org/"
+
+assert markdown(text) == "<p>http://example.org/</p>"
+
+assert (markdown(text, extensions=["linkify"])
+        == '<p><a href="http://example.org/">http://example.org/</a></p>')
+```
 
 ### Linkify Callbacks
 
