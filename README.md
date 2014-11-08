@@ -35,8 +35,8 @@ assert expected == actual
 
 ### Linkify Callbacks
 
-If you need callbacks, you can specify them by passing `LinkifyExtension` to
-`Markdown`...
+If you need callbacks, you can specify them in `extension_configs` like shown
+below.
 
 ```python
 from mdx_linkify.mdx_linkify import LinkifyExtension
@@ -49,11 +49,14 @@ def dont_linkify_txt_extension(attrs, new=False):
 
     return attrs
 
-configs = {
-    "linkify_callbacks": [[dont_linkify_txt_extension], ""]
-}
-linkify_extension = LinkifyExtension(configs=configs)
-md = Markdown(extensions=[linkify_extension])
+md = Markdown(
+    extensions=[LinkifyExtension()],
+    extension_configs={
+        "linkify": {
+            "linkify_callbacks": [[dont_linkify_txt_extension], ""]
+        }
+    }
+)
 
 assert md.convert("not_link.txt"), '<p>not_link.txt</p>'
 

@@ -71,9 +71,8 @@ class LinkifyTest(unittest.TestCase):
 
             return attrs
 
-        linkify_extension = LinkifyExtension()
         md = Markdown(
-            extensions=[linkify_extension],
+            extensions=[LinkifyExtension()],
             extension_configs={
                 "linkify": {
                     "linkify_callbacks": [[dont_linkify_txt_extension], ""]
