@@ -33,5 +33,5 @@ class LinkifyExtension(Extension):
             "_begin")
 
 
-def makeExtension(configs=None):
-    return LinkifyExtension(configs=configs)
+def makeExtension(*args, **kwargs):
+    return LinkifyExtension(*args, **kwargs)

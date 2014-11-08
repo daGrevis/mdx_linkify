@@ -71,11 +71,15 @@ class LinkifyTest(unittest.TestCase):
 
             return attrs
 
-        configs = {
-            "linkify_callbacks": [[dont_linkify_txt_extension], ""]
-        }
-        linkify_extension = LinkifyExtension(configs=configs)
-        md = Markdown(extensions=[linkify_extension])
+        linkify_extension = LinkifyExtension()
+        md = Markdown(
+            extensions=[linkify_extension],
+            extension_configs={
+                "linkify": {
+                    "linkify_callbacks": [[dont_linkify_txt_extension], ""]
+                }
+            }
+        )
 
         actual = md.convert("not_link.txt")
         expected = '<p>not_link.txt</p>'
