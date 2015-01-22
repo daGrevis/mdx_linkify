@@ -85,3 +85,12 @@ python setup.py test
 ```
 
 Pull requests are much welcome! :+1:
+
+## Releasing
+
+_(more like a cheatsheet for me actually)_
+
+* Change version in `setup.py`,
+* Commit and tag it,
+* Push it (including tag),
+* Run `python setup.py register && python setup.py sdist upload`;
