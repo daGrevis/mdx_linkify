@@ -73,6 +73,11 @@ The project is [on PyPI](https://pypi.python.org/pypi/mdx_linkify)!
 
     pip install mdx_linkify
 
+If you want the bleeding-edge version (this includes unreleased-to-PyPI code), you can always grab
+the master branch directly from Git.
+
+    pip install git+git://github.com/daGrevis/mdx_linkify.git
+
 ## Development
 
 ```
