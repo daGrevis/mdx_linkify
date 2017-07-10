@@ -1,47 +1,40 @@
 # Mdx Linkify
 
-[![Build Status](https://travis-ci.org/daGrevis/mdx_linkify.png?branch=master)](https://travis-ci.org/daGrevis/mdx_linkify)
-[![Coverage Status](https://coveralls.io/repos/daGrevis/mdx_linkify/badge.png?branch=master)](https://coveralls.io/r/daGrevis/mdx_linkify?branch=master)
-[![PyPI Downloads](https://pypip.in/d/mdx_linkify/badge.png)](https://pypi.python.org/pypi/mdx_linkify)
-[![PyPI Version](https://pypip.in/v/mdx_linkify/badge.png)](https://pypi.python.org/pypi/mdx_linkify)
+[![Travis](https://img.shields.io/travis/daGrevis/mdx_linkify.svg)](https://travis-ci.org/daGrevis/mdx_linkify)
+[![Coveralls](https://img.shields.io/coveralls/daGrevis/mdx_linkify.svg)](https://coveralls.io/r/daGrevis/mdx_linkify?branch=master)
+[![PyPI](https://img.shields.io/pypi/v/mdx_linkify.svg)](https://pypi.python.org/pypi/mdx_linkify)
+[![PyPI](https://img.shields.io/pypi/pyversions/mdx_linkify.svg)](https://pypi.python.org/pypi/mdx_linkify)
 
 This extension for [Python Markdown](https://github.com/waylan/Python-Markdown)
-will convert all links to HTML anchors.
+will convert text that look like links to HTML anchors.
 
-There's [an existing solution](https://github.com/r0wb0t/markdown-urlize) for
-parsing links with regexes. Mdx Linkify is a bit smarter and asks
-[Bleach](https://github.com/jsocol/bleach) to parse them. :clap:
+There's an alternative package that serves the same purpose called
+[`markdown-urlize`](https://github.com/r0wb0t/markdown-urlize). The main
+difference is that [`mdx_linkify`](https://github.com/daGrevis/mdx_linkify) is
+utilizing the excellent [`bleach`](https://github.com/jsocol/bleach) for
+searching links in text. :clap:
 
 ## Usage
 
-### Basic Example
-
-By default, if you add `linkify` extension to `markdown` extensions...
+### Minimal Example
 
 ```python
 from markdown import markdown
 
-
-text = "http://example.org/"
-
-assert markdown(text) == "<p>http://example.org/</p>"
-
-expected = markdown(text, extensions=["linkify"])
-actual = '<p><a href="http://example.org/">http://example.org/</a></p>'
-assert expected == actual
+markdown("minimal http://example.org/", extensions=["mdx_linkify"])
+# Returns '<p>minimal <a href="http://example.org/">http://example.org/</a></p>'
 ```
-
-...it will automatically convert all links to HTML anchors.
 
 ### Linkify Callbacks
 
-If you need callbacks, you can specify them in `extension_configs` like shown
-below.
+It's possible to omit links that match your custom filter with linkify
+callbacks.
+
+For example, to omit links that end with `.txt` extension:
 
 ```python
 from mdx_linkify.mdx_linkify import LinkifyExtension
 from markdown import Markdown
-
 
 def dont_linkify_txt_extension(attrs, new=False):
     if attrs["_text"].endswith(".txt"):
@@ -65,16 +58,14 @@ actual = '<p><a href="http://example.com">example.com</a></p>'
 assert expected == actual
 ```
 
-...here, we only convert links that do **not** end with `.txt` extension.
-
 ## Installation
 
 The project is [on PyPI](https://pypi.python.org/pypi/mdx_linkify)!
 
     pip install mdx_linkify
 
-If you want the bleeding-edge version (this includes unreleased-to-PyPI code), you can always grab
-the master branch directly from Git.
+If you want the bleeding-edge version (this includes unreleased-to-PyPI code),
+you can always grab the master branch directly from Git.
 
     pip install git+git://github.com/daGrevis/mdx_linkify.git
 
