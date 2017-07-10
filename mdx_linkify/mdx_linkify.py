@@ -1,14 +1,7 @@
 import bleach
 
-from html5lib.sanitizer import HTMLSanitizer
-
 from markdown.postprocessors import Postprocessor
 from markdown import Extension
-
-
-class MyTokenizer(HTMLSanitizer):
-    def sanitize_token(self, token):
-        return token
 
 
 class LinkifyPostprocessor(Postprocessor):
@@ -18,8 +11,7 @@ class LinkifyPostprocessor(Postprocessor):
 
     def run(self, text):
         text = bleach.linkify(text,
-                              callbacks=self._callbacks,
-                              tokenizer=MyTokenizer)
+                              callbacks=self._callbacks)
         return text
 
 
