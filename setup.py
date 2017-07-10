@@ -29,5 +29,5 @@ setup(name="mdx_linkify",
           "Development Status :: 4 - Beta",
           "License :: OSI Approved :: MIT License",
       ],
-      install_requires=["Markdown>=2.5", "bleach>=1.4"],
+      install_requires=["Markdown>=2.6", "bleach>=2.0.0"],
       test_suite="mdx_linkify.tests")
