@@ -8,3 +8,5 @@
 /lib/
 *.py[cow]
 /share/
+/.Python
+/pip-selfcheck.json
