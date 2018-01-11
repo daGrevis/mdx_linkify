@@ -11,7 +11,8 @@ class LinkifyPostprocessor(Postprocessor):
 
     def run(self, text):
         text = bleach.linkify(text,
-                              callbacks=self._callbacks)
+                              callbacks=self._callbacks,
+                              skip_tags=['code'])
         return text
 
 
