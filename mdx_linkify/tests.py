@@ -50,6 +50,12 @@ class LinkifyTest(unittest.TestCase):
                           extensions=["mdx_linkify"])
         self.assertEqual(expected, actual)
 
+    def test_backticks_link(self):
+        expected = '<p><code>example.com</code></p>'
+        actual = markdown("`example.com`",
+                          extensions=["mdx_linkify"])
+        self.assertEqual(expected, actual)
+
     def test_image_that_has_link_in_it(self):
         src = "http://example.com/monty.jpg"
         alt = "Monty"
