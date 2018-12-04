@@ -19,11 +19,11 @@ class LinkifyPostprocessor(Postprocessor):
 class LinkifyExtension(Extension):
     config = {'linkify_callbacks': [[], 'Callbacks to send to bleach.linkify']}
 
-    def extendMarkdown(self, md, md_globals):
-        md.postprocessors.add(
-            "linkify",
+    def extendMarkdown(self, md):
+        md.postprocessors.register(
             LinkifyPostprocessor(md, self.getConfig('linkify_callbacks')),
-            "_begin")
+            "linkify",
+            50)
 
 
 def makeExtension(*args, **kwargs):
