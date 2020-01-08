@@ -71,28 +71,49 @@ class LinkifyTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_callbacks(self):
-        def dont_linkify_txt_extension(attrs, new=False):
-            if attrs["_text"].endswith(".txt"):
+        def dont_linkify_net_extension(attrs, new=False):
+            if attrs["_text"].endswith(".net"):
                 return None
 
             return attrs
 
-        md = Markdown(
-            extensions=[LinkifyExtension()],
-            extension_configs={
-                "linkify": {
-                    "linkify_callbacks": [[dont_linkify_txt_extension], ""]
-                }
-            }
-        )
-
-        actual = md.convert("not_link.txt")
-        expected = '<p>not_link.txt</p>'
+        # assert expected behavior WITHOUT our callback
+        actual = markdown("https://linked.net",
+                          extensions=["mdx_linkify"])
+        expected = '<p><a href="https://linked.net">https://linked.net</a></p>'
         self.assertEqual(actual, expected)
 
+        md = Markdown(
+            extensions=[LinkifyExtension(linkify_callbacks=[dont_linkify_net_extension])],
+        )
+
+        # assert .net no longer works
+        actual = md.convert("https://not-linked.net")
+        expected = '<p>https://not-linked.net</p>'
+        self.assertEqual(actual, expected)
+
+        # assert other links still work
         actual = md.convert("example.com")
         expected = '<p><a href="http://example.com">example.com</a></p>'
         self.assertEqual(actual, expected)
+
+        # assert that configuration parameters can be over-ridden at run time
+        # https://python-markdown.github.io/extensions/api/#configsettings 
+        expected = '<p><a href="https://not-linked.net">https://not-linked.net</a></p>'
+        actual = markdown("https://not-linked.net",
+                          extensions=["mdx_linkify"])
+        self.assertEqual(expected, actual)        
+    
+    def test_no_schema(self):
+        expected = '<p><a href="http://example.com">example.com</a></p>'
+        actual = markdown("example.com",
+                          extensions=["mdx_linkify"])
+        self.assertEqual(expected, actual)
+    
+    def test_email(self):
+        expected = '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
+        actual = markdown("contact@example.com", extensions=[LinkifyExtension(linkify_parse_email=True)])
+        self.assertEqual(expected, actual)
 
 
 if __name__ == "__main__":

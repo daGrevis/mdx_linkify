@@ -30,25 +30,20 @@ markdown("minimal http://example.org/", extensions=["mdx_linkify"])
 It's possible to omit links that match your custom filter with linkify
 callbacks.
 
-For example, to omit links that end with `.txt` extension:
+For example, to omit links that end with `.net` extension:
 
 ```python
 from mdx_linkify.mdx_linkify import LinkifyExtension
 from markdown import Markdown
 
-def dont_linkify_txt_extension(attrs, new=False):
-    if attrs["_text"].endswith(".txt"):
+def dont_linkify_net_extension(attrs, new=False):
+    if attrs["_text"].endswith(".net"):
         return None
 
     return attrs
 
 md = Markdown(
-    extensions=[LinkifyExtension()],
-    extension_configs={
-        "linkify": {
-            "linkify_callbacks": [[dont_linkify_txt_extension], ""]
-        }
-    }
+    extensions=[LinkifyExtension(linkify_callbacks=[dont_linkify_txt_extension])],
 )
 
 assert md.convert("not_link.txt"), '<p>not_link.txt</p>'
@@ -86,7 +81,7 @@ Pull requests are much welcome! :+1:
 
 _(more like a cheatsheet for me actually)_
 
-* Change version in `setup.py`,
-* Commit and tag it,
-* Push it (including tag),
-* Run `python setup.py register && python setup.py sdist upload`;
+- Change version in `setup.py`,
+- Commit and tag it,
+- Push it (including tag),
+- Run `python setup.py register && python setup.py sdist upload`;
