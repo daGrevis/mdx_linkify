@@ -43,7 +43,7 @@ def dont_linkify_net_extension(attrs, new=False):
     return attrs
 
 md = Markdown(
-    extensions=[LinkifyExtension(linkify_callbacks=[dont_linkify_txt_extension])],
+    extensions=[LinkifyExtension(linkify_callbacks=[dont_linkify_net_extension])],
 )
 
 assert md.convert("not_link.txt"), '<p>not_link.txt</p>'
