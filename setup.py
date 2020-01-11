@@ -20,6 +20,7 @@ setup(name="mdx_linkify",
       url="https://github.com/daGrevis/mdx_linkify",
       packages=["mdx_linkify"],
       long_description=get_readme("README.md"),
+      long_description_content_type="text/markdown",
       classifiers=[
           "Topic :: Text Processing :: Markup",
           "Topic :: Utilities",
