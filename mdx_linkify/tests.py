@@ -102,14 +102,14 @@ class LinkifyTest(unittest.TestCase):
         expected = '<p><a href="https://not-linked.net">https://not-linked.net</a></p>'
         actual = markdown("https://not-linked.net",
                           extensions=["mdx_linkify"])
-        self.assertEqual(expected, actual)        
-    
+        self.assertEqual(expected, actual)
+
     def test_no_schema(self):
         expected = '<p><a href="http://example.com">example.com</a></p>'
         actual = markdown("example.com",
                           extensions=["mdx_linkify"])
         self.assertEqual(expected, actual)
-    
+
     def test_email(self):
         expected = '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
         actual = markdown("contact@example.com", extensions=[LinkifyExtension(linkify_parse_email=True)])
