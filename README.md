@@ -25,10 +25,9 @@ markdown("minimal http://example.org/", extensions=["mdx_linkify"])
 # Returns '<p>minimal <a href="http://example.org/">http://example.org/</a></p>'
 ```
 
-### Linkify Callbacks
+### Configuring Linker
 
-It's possible to omit links that match your custom filter with linkify
-callbacks.
+To configure used Linker instance, use `linker_options` parameter.
 
 For example, to omit links that end with `.net` extension:
 
@@ -43,7 +42,7 @@ def dont_linkify_net_extension(attrs, new=False):
     return attrs
 
 md = Markdown(
-    extensions=[LinkifyExtension(linkify_callbacks=[dont_linkify_net_extension])],
+    extensions=[LinkifyExtension(linker_options={"callbacks": [dont_linkify_net_extension]})],
 )
 
 assert md.convert("not_link.txt"), '<p>not_link.txt</p>'
@@ -52,6 +51,9 @@ expected = md.convert("example.com")
 actual = '<p><a href="http://example.com">example.com</a></p>'
 assert expected == actual
 ```
+
+For additional options see:
+https://bleach.readthedocs.io/en/latest/linkify.html#using-bleach-linkifier-linker
 
 ## Installation
 
