@@ -53,6 +53,26 @@ actual = '<p><a href="http://example.com">example.com</a></p>'
 assert expected == actual
 ```
 
+### Custom domain support
+
+If some domain is not recognized as a link, add it as follows:
+
+```python
+from bleach.linkifier import TLDS, build_url_re
+from mdx_linkify.mdx_linkify import LinkifyExtension
+from markdown import Markdown
+
+url_re = build_url_re(TLDS + ["example"])
+md = Markdown(
+    extensions=[LinkifyExtension(linkify_url_re=url_re)],
+)
+
+expected = '<p><a href="http://domain.example">domain.example</a></p>'
+actual = md.convert("domain.example")
+
+assert expected == actual
+```
+
 ## Installation
 
 The project is [on PyPI](https://pypi.python.org/pypi/mdx_linkify)!

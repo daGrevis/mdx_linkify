@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 import unittest
 
+from bleach.linkifier import build_url_re
 from markdown import markdown, Markdown
 
 from mdx_linkify.mdx_linkify import LinkifyExtension
@@ -113,6 +114,14 @@ class LinkifyTest(unittest.TestCase):
     def test_email(self):
         expected = '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
         actual = markdown("contact@example.com", extensions=[LinkifyExtension(linkify_parse_email=True)])
+
+    def test_custom_url_re(self):
+        url_re = build_url_re(["example"])
+        expected = '<p><a href="https://domain.example">https://domain.example</a></p>'
+        actual = markdown(
+            "https://domain.example",
+            extensions=[LinkifyExtension(linkify_url_re=url_re)],
+        )
         self.assertEqual(expected, actual)
 
 
