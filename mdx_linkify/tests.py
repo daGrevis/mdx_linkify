@@ -116,10 +116,11 @@ class LinkifyTest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_email(self):
-        expected = '<p><a href="mailto:contact@example.com" rel="nofollow">contact@example.com</a></p>'
+        expected = '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
         actual = markdown("contact@example.com", extensions=[
             LinkifyExtension(linker_options={"parse_email": True}),
         ])
+        self.assertEqual(expected, actual)
 
     def test_custom_url_re(self):
         url_re = build_url_re(["example"])
