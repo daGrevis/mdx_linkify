@@ -45,7 +45,7 @@ md = Markdown(
     extensions=[LinkifyExtension(linker_options={"callbacks": [dont_linkify_net_extension]})],
 )
 
-assert md.convert("not_link.txt"), '<p>not_link.txt</p>'
+assert md.convert("not_link.net"), '<p>not_link.net</p>'
 
 expected = md.convert("example.com")
 actual = '<p><a href="http://example.com">example.com</a></p>'
