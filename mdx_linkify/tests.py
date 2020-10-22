@@ -71,8 +71,27 @@ class LinkifyTest(unittest.TestCase):
         actual = markdown(expected, extensions=["mdx_linkify"])
         self.assertEqual(expected, actual)
 
+    def test_no_schema(self):
+        expected = '<p><a href="http://example.com" rel="nofollow">example.com</a></p>'
+        actual = markdown("example.com", extensions=["mdx_linkify"])
+        self.assertEqual(expected, actual)
+
+    def test_email(self):
+        expected = '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
+        actual = markdown("contact@example.com", extensions=[
+            LinkifyExtension(linker_options={"parse_email": True}),
+        ])
+        self.assertEqual(expected, actual)
+
+    def test_no_email(self):
+        expected = '<p>contact@example.com</p>'
+        actual = markdown("contact@example.com", extensions=[
+            LinkifyExtension(linker_options={"parse_email": False}),
+        ])
+        self.assertEqual(expected, actual)
+
     def test_callbacks(self):
-        def dont_linkify_net_extension(attrs, new=False):
+        def dont_linkify_net_tld(attrs, new=False):
             if attrs["_text"].endswith(".net"):
                 return None
 
@@ -88,7 +107,7 @@ class LinkifyTest(unittest.TestCase):
             extensions=[
                 LinkifyExtension(
                     linker_options={
-                        "callbacks": [dont_linkify_net_extension],
+                        "callbacks": [dont_linkify_net_tld],
                     },
                 ),
             ],
@@ -108,18 +127,6 @@ class LinkifyTest(unittest.TestCase):
         # https://python-markdown.github.io/extensions/api/#configsettings 
         expected = '<p><a href="https://should-be-linked.net" rel="nofollow">https://should-be-linked.net</a></p>'
         actual = markdown("https://should-be-linked.net", extensions=["mdx_linkify"])
-        self.assertEqual(expected, actual)
-
-    def test_no_schema(self):
-        expected = '<p><a href="http://example.com" rel="nofollow">example.com</a></p>'
-        actual = markdown("example.com", extensions=["mdx_linkify"])
-        self.assertEqual(expected, actual)
-
-    def test_email(self):
-        expected = '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
-        actual = markdown("contact@example.com", extensions=[
-            LinkifyExtension(linker_options={"parse_email": True}),
-        ])
         self.assertEqual(expected, actual)
 
     def test_custom_url_re(self):

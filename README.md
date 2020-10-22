@@ -25,36 +25,6 @@ markdown("minimal http://example.org/", extensions=["mdx_linkify"])
 # Returns '<p>minimal <a href="http://example.org/">http://example.org/</a></p>'
 ```
 
-### Configuring Linker
-
-To configure used Linker instance, use `linker_options` parameter.
-
-For example, to omit links that end with `.net` extension:
-
-```python
-from mdx_linkify.mdx_linkify import LinkifyExtension
-from markdown import Markdown
-
-def dont_linkify_net_extension(attrs, new=False):
-    if attrs["_text"].endswith(".net"):
-        return None
-
-    return attrs
-
-md = Markdown(
-    extensions=[LinkifyExtension(linker_options={"callbacks": [dont_linkify_net_extension]})],
-)
-
-assert md.convert("not_link.net"), '<p>not_link.net</p>'
-
-expected = md.convert("example.com")
-actual = '<p><a href="http://example.com">example.com</a></p>'
-assert expected == actual
-```
-
-For additional options see:
-https://bleach.readthedocs.io/en/latest/linkify.html#using-bleach-linkifier-linker
-
 ## Installation
 
 The project is [on PyPI](https://pypi.python.org/pypi/mdx_linkify)!
@@ -65,6 +35,57 @@ If you want the bleeding-edge version (this includes unreleased-to-PyPI code),
 you can always grab the master branch directly from Git.
 
     pip install git+git://github.com/daGrevis/mdx_linkify.git
+
+### Configuring Linker
+
+To configure used Linker instance, use `linker_options` parameter. It will be passed to [`bleach.linkifier.Linker`](https://bleach.readthedocs.io/en/latest/linkify.html#using-bleach-linkifier-linker) unchanged.
+
+
+#### Example: Parse Emails
+
+```python
+from mdx_linkify.mdx_linkify import LinkifyExtension
+from markdown import Markdown
+
+md = Markdown(
+    extensions=[LinkifyExtension(linker_options={"parse_email": True})],
+)
+
+assert md.convert('contact@example.com'), '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
+```
+
+#### Example: Custom TLDs
+
+```python
+from mdx_linkify.mdx_linkify import LinkifyExtension
+from bleach.linkifier import build_url_re
+from markdown import Markdown
+
+md = Markdown(
+    extensions=[LinkifyExtension(linker_options={"url_re": build_url_re(["custom", "custom2"])})],
+)
+
+assert md.convert('linked.custom'), '<p><a href="http://linked.custom">linked.custom</a></p>'
+```
+
+#### Example: Ignoring TLDs
+
+```python
+from mdx_linkify.mdx_linkify import LinkifyExtension
+from markdown import Markdown
+
+def dont_linkify_net_tld(attrs, new=False):
+    if attrs["_text"].endswith(".net"):
+        return None
+
+    return attrs
+
+md = Markdown(
+    extensions=[LinkifyExtension(linker_options={"callbacks": [dont_linkify_net_tld]})],
+)
+
+assert md.convert("not-linked.net"), '<p>not-linked.net</p>'
+```
 
 ## Development
 
