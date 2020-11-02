@@ -28,10 +28,11 @@ class LinkifyPostprocessor(Postprocessor):
     def __init__(self, md, linker_options):
         super(LinkifyPostprocessor, self).__init__(md)
         linker_options.setdefault("skip_tags", ["code"])
-        self._linker = Linker(**linker_options)
+        self._linker_options = linker_options
 
     def run(self, text):
-        return self._linker.linkify(text)
+        linker = Linker(**self._linker_options)
+        return linker.linkify(text)
 
 
 def makeExtension(*args, **kwargs):
