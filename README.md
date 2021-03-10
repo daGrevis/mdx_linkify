@@ -51,7 +51,7 @@ md = Markdown(
     extensions=[LinkifyExtension(linker_options={"parse_email": True})],
 )
 
-assert md.convert('contact@example.com'), '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
+assert md.convert('contact@example.com') == '<p><a href="mailto:contact@example.com">contact@example.com</a></p>'
 ```
 
 #### Example: Custom TLDs
@@ -65,7 +65,7 @@ md = Markdown(
     extensions=[LinkifyExtension(linker_options={"url_re": build_url_re(["custom", "custom2"])})],
 )
 
-assert md.convert('linked.custom'), '<p><a href="http://linked.custom">linked.custom</a></p>'
+assert md.convert('linked.custom') == '<p><a href="http://linked.custom" rel="nofollow">linked.custom</a></p>'
 ```
 
 #### Example: Ignoring TLDs
@@ -84,7 +84,7 @@ md = Markdown(
     extensions=[LinkifyExtension(linker_options={"callbacks": [dont_linkify_net_tld]})],
 )
 
-assert md.convert("not-linked.net"), '<p>not-linked.net</p>'
+assert md.convert("not-linked.net") == '<p>not-linked.net</p>'
 ```
 
 ## Development
